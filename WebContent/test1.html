@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Leaflet Quick Start Guide Example</title>
+	<title>USA Outline</title>
 	<meta charset="utf-8" />
 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -37,8 +37,21 @@
 			    });
 		geojson.addTo(map);
 		 }*/
+		 
+	 $.ajax({
+			    url:"./countries/MEX.json",
+			    type:"HEAD",
+			    error: function()
+			    {
+			        //file not exists
+			    },
+			    success: function()
+			    {
+			        //file exists
+			    }
+			});
 
-		
+		//alert("DIALOUG");
 		 L.geoJson(usaGEOJSON).addTo(map).bindPopup("USA! USA! USA! \n" + usaGEOJSON["features"][0]["properties"]["name"]);
 	
 		
