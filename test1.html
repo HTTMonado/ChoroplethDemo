@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>USA Outline</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
+</head>
+
+<body>
+    <div id="map" style="width: 600px; height: 400px"></div>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
+    <script src="https://raw.github.com/calvinmetcalf/leaflet-ajax/master/dist/leaflet.ajax.min.js"></script>
+    <script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
+    <script src="countries.js" type="text/javascript"></script>
+    <script>
+    var map = L.map('map').setView([41.850033, -87.65005229999997], 3);
+
+    L.tileLayer('https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', {
+        maxZoom: 18,
+        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+            '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+            'Imagery © <a href="http://mapbox.com">Mapbox</a>',
+        id: 'examples.map-i875mjb7'
+    }).addTo(map);
+
+   /* function popup(feature, layer) {
+    if (feature.properties && feature.properties.name) {
+        layer.bindPopup(feature.properties.name);
+    }*/
+
+
+    function popup(feature, layer) {
+    if (feature.properties && feature.properties.name) {
+        layer.bindPopup(feature.properties.name);
+    }
+}
+
+   L.geoJson(countries, {
+     onEachFeature: popup
+}).addTo(map);
+
+    
+
+
+/*
+  
+     $.ajax({
+			    url:"https://github.com/johan/world.geo.json/blob/master/countries/MEX.geo.json?jsoncallback=?",
+			    type:"HEAD",
+			    error: function()
+			    {
+			        alert("nah");
+			    },
+			    success: function()
+			    {
+			        alert("yee");
+			    }
+			});
+
+    //alert("DIALOUG");
+    usaGEOJSON["features"][0]["properties"].population = 320000000;
+    L.geoJson(usaGEOJSON).addTo(map).bindPopup("USA! USA! USA! \n" + usaGEOJSON["features"][0]["properties"]["name"] + " " + usaGEOJSON["features"][0]["properties"].population);
+
+    var district_boundary = new L.geoJson();
+	district_boundary.addTo(map);
+
+		$.ajax({
+			dataType: "json",
+			url: "https://github.com/johan/world.geo.json/blob/master/countries/MEX.geo.json?jsoncallback=?",
+			success: function(data) {
+    		$(data.features).each(function(key, data) {
+        district_boundary.addData(data);
+    		});
+			}
+			}).error(function() {});
+
+        
+    
+
+
+
+
+
+
+
+    /*$.getJSON("MEX.geo.json", function(data) {
+    var geojson = L.geoJson(data, {
+      onEachFeature: function (feature, layer) {
+        layer.bindPopup(feature.properties.name);
+      }
+    });
+    
+    geojson.addTo(map);
+  };*/
+
+    L.polygon([
+        [41.850033, -87.65005229999997],
+        [42.503, -88],
+        [39.51, -85]
+    ]).addTo(map).bindPopup("I am a polygon.");
+
+    var popup = L.popup();
+
+    function onMapClick(e) {
+        popup
+            .setLatLng(e.latlng)
+            .setContent("You clicked the map at " + e.latlng.toString())
+            .openOn(map);
+    }
+
+    map.on('click', onMapClick);
+    </script>
+</body>
+
+</html>
